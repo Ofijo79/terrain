@@ -8,6 +8,8 @@ public class TPS : MonoBehaviour
     Animator _animator;
     Transform _camera;
 
+    TPS _script;
+
     float _horizontal;
     float _vertical;
     public GameObject _cameraNormal;
@@ -34,6 +36,7 @@ public class TPS : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
         _camera = Camera.main.transform;
+        _script = GetComponent<TPS>();
     }
 
     // Update is called once per frame
@@ -51,7 +54,6 @@ public class TPS : MonoBehaviour
         {
             Movement();            
         }
-
         Jump();
     }
 
@@ -70,8 +72,7 @@ public class TPS : MonoBehaviour
 
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             _controller.Move(moveDirection.normalized * _playerSpeed * Time.deltaTime);
-        }
-        
+        }        
     }
 
     void AimMovement()
@@ -120,6 +121,7 @@ public class TPS : MonoBehaviour
         if(collider.gameObject.layer == 6)
         {
             _animator.SetBool("IsDead", true);
+            _script.enabled = false;
         }
     }
 }
