@@ -99,6 +99,8 @@ public class TPS : MonoBehaviour
     {
         _isGrounded = Physics.CheckSphere(_sensorPosition.position, _sensorRadius, _groundLayer);
 
+        _animator.SetBool("IsJumping", false);
+
         if(_isGrounded && _playerGravity.y < 0)
         {
             _playerGravity.y = 0;
@@ -111,5 +113,13 @@ public class TPS : MonoBehaviour
         _playerGravity.y += _gravity * Time.deltaTime;
         
         _controller.Move(_playerGravity * Time.deltaTime);
+    }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.layer == 6)
+        {
+            _animator.SetBool("IsDead", true);
+        }
     }
 }
