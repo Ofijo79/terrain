@@ -8,7 +8,7 @@ public class TPS : MonoBehaviour
     Animator _animator;
     Transform _camera;
 
-    TPS _script;
+    TPS _desactivateScript;
 
     float _horizontal;
     float _vertical;
@@ -36,7 +36,7 @@ public class TPS : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         _animator = GetComponentInChildren<Animator>();
         _camera = Camera.main.transform;
-        _script = GetComponent<TPS>();
+        _desactivateScript = GetComponent<TPS>();
     }
 
     // Update is called once per frame
@@ -105,6 +105,7 @@ public class TPS : MonoBehaviour
         if(_isGrounded && _playerGravity.y < 0)
         {
             _playerGravity.y = -2;
+            _animator.SetBool("IsJumping", false);
         }
         if(_isGrounded && Input.GetButtonDown("Jump"))
         {
@@ -121,7 +122,7 @@ public class TPS : MonoBehaviour
         if(collider.gameObject.layer == 6)
         {
             _animator.SetBool("IsDead", true);
-            _script.enabled = false;
+            _desactivateScript.enabled = false;
         }
     }
 }
